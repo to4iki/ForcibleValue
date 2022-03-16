@@ -1,7 +1,4 @@
 Pod::Spec.new do |spec|
-  # last_commit = `git rev-list --tags --max-count=1`.strip
-  # last_tag = `git describe --tags #{last_commit}`.strip
-
   spec.name         = "ForcibleValue"
   spec.version      = "0.1.0"
   spec.summary      = "Better Codable through Property Wrappers."
