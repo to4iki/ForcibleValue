@@ -2,7 +2,7 @@
 ///
 /// The values of `Bool`, `Int`, and `String` can be decoded.
 @propertyWrapper
-public struct ForcibleBool: Codable, CustomStringConvertible {
+public struct ForcibleBool: Decodable, CustomStringConvertible {
     public var wrappedValue: Bool
 
     public var description: String {
@@ -53,5 +53,31 @@ public struct ForcibleBool: Codable, CustomStringConvertible {
                 )
             )
         }
+    }
+}
+
+// MARK: - ForcibleBool.Option
+extension ForcibleBool {
+    @propertyWrapper
+    public struct Option: Decodable, CustomStringConvertible {
+        public var wrappedValue: Bool?
+
+        public var description: String {
+            wrappedValue?.description ?? "nil"
+        }
+
+        public init(wrappedValue: Bool?) {
+            self.wrappedValue = wrappedValue
+        }
+
+        public init(from decoder: Decoder) throws {
+            self.wrappedValue = try ForcibleBool(from: decoder).wrappedValue
+        }
+    }
+}
+
+extension KeyedDecodingContainer {
+    public func decode(_ type: ForcibleBool.Option.Type, forKey key: Key) throws -> ForcibleBool.Option {
+        try decodeIfPresent(type, forKey: key) ?? ForcibleBool.Option(wrappedValue: nil)
     }
 }

@@ -2,7 +2,8 @@ import Foundation
 import ForcibleValue
 
 struct User: Decodable {
-    @ForcibleString var name: String
+    @ForcibleString var fullName: String
+    @ForcibleString.Option var nickName: String?
     @ForcibleInt var age: Int
     @ForcibleDouble var height: Double
     @ForcibleFloat var weight: Float
@@ -11,7 +12,7 @@ struct User: Decodable {
 
 let json = """
 {
-    "name": 1234,
+    "fullName": 123,
     "age": "30",
     "height": "172.3",
     "weight": "60.0",
@@ -21,7 +22,7 @@ let json = """
 
 do {
     let user = try JSONDecoder().decode(User.self, from: json!)
-    print(user) // User(_name: 1234, _age: 30, _height: 172.3, _weight: 60.0, _isAdmin: true)
+    print(user) // User(_fullName: 123, _nickName: nil, _age: 30, _height: 172.3, _weight: 60.0, _isAdmin: true)
 } catch {
     print(error)
 }

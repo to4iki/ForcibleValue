@@ -2,7 +2,7 @@
 ///
 /// The values of `LosslessStringConvertible` and `String` can be decoded.
 @propertyWrapper
-public struct ForcibleNumber<T: LosslessStringConvertible & Codable>: Codable, CustomStringConvertible {
+public struct ForcibleNumber<T: LosslessStringConvertible & Decodable>: Decodable, CustomStringConvertible {
     public var wrappedValue: T
 
     public var description: String {
@@ -42,6 +42,32 @@ public struct ForcibleNumber<T: LosslessStringConvertible & Codable>: Codable, C
     }
 }
 
+// MARK: - ForcibleString.Option
+extension ForcibleNumber {
+    @propertyWrapper
+    public struct Option: Decodable, CustomStringConvertible {
+        public var wrappedValue: T?
+
+        public var description: String {
+            wrappedValue?.description ?? "nil"
+        }
+
+        public init(wrappedValue: T?) {
+            self.wrappedValue = wrappedValue
+        }
+
+        public init(from decoder: Decoder) throws {
+            self.wrappedValue = try ForcibleNumber(from: decoder).wrappedValue
+        }
+    }
+}
+
+extension KeyedDecodingContainer {
+    public func decode<T>(_ type: ForcibleNumber<T>.Option.Type, forKey key: Key) throws -> ForcibleNumber<T>.Option {
+        try decodeIfPresent(type, forKey: key) ?? ForcibleNumber<T>.Option(wrappedValue: nil)
+    }
+}
+
 public typealias ForcibleDouble = ForcibleNumber<Double>
 public typealias ForcibleFloat = ForcibleNumber<Float>
 public typealias ForcibleInt = ForcibleNumber<Int>
@@ -54,3 +80,18 @@ public typealias ForcibleUInt8 = ForcibleNumber<UInt8>
 public typealias ForcibleUInt16 = ForcibleNumber<UInt16>
 public typealias ForcibleUInt32 = ForcibleNumber<UInt32>
 public typealias ForcibleUInt64 = ForcibleNumber<UInt64>
+
+extension ForcibleNumber {
+    public typealias OptionDouble = ForcibleNumber<Double>.Option
+    public typealias OptionFloat = ForcibleNumber<Float>.Option
+    public typealias OptionInt = ForcibleNumber<Int>.Option
+    public typealias OptionInt8 = ForcibleNumber<Int8>.Option
+    public typealias OptionInt16 = ForcibleNumber<Int16>.Option
+    public typealias OptionInt32 = ForcibleNumber<Int32>.Option
+    public typealias OptionInt64 = ForcibleNumber<Int64>.Option
+    public typealias OptionUInt = ForcibleNumber<UInt>.Option
+    public typealias OptionUInt8 = ForcibleNumber<UInt8>.Option
+    public typealias OptionUInt16 = ForcibleNumber<UInt16>.Option
+    public typealias OptionUInt32 = ForcibleNumber<UInt32>.Option
+    public typealias OptionUInt64 = ForcibleNumber<UInt64>.Option
+}
