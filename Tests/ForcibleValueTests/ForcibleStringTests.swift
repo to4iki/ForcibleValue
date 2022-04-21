@@ -10,6 +10,10 @@ final class ForcibleStringTests: XCTestCase {
         @ForcibleString.Option var value: String?
     }
 
+    private struct DefaultTarget: Decodable {
+        @ForcibleDefault.EmptyString var value: String
+    }
+
     func testDecodeSuccess() throws {
         let testCases: [ParameterizedTestCase<Any, String>] = [
             .init(input: "\"string\"", output: "string"),
@@ -73,6 +77,34 @@ final class ForcibleStringTests: XCTestCase {
 
             do {
                 let target = try JSONDecoder().decode(OptionTarget.self, from: json!)
+                XCTAssertEqual(target.value, testCase.output)
+            } catch {
+                XCTFail(error.localizedDescription)
+            }
+        }
+    }
+
+    func testDefaultValueDecode() throws {
+        let testCases: [ParameterizedTestCase<Any?, String>] = [
+            .init(input: nil, output: ""),
+            .init(input: 1, output: "1"),
+        ]
+
+        for testCase in testCases {
+            let json: Data? = {
+                if let input = testCase.input {
+                    return """
+                    {
+                        "value": \(input)
+                    }
+                    """.data(using: .utf8)
+                } else {
+                    return "{}".data(using: .utf8)
+                }
+            }()
+
+            do {
+                let target = try JSONDecoder().decode(DefaultTarget.self, from: json!)
                 XCTAssertEqual(target.value, testCase.output)
             } catch {
                 XCTFail(error.localizedDescription)

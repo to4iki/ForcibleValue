@@ -2,7 +2,7 @@
 ///
 /// The values of `String`, `Int`, and `Double` can be decoded.
 @propertyWrapper
-public struct ForcibleString: Decodable, CustomStringConvertible {
+public struct ForcibleString: ForcibleValue {
     public var wrappedValue: String
 
     public var description: String {

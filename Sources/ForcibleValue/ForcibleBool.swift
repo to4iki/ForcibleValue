@@ -2,7 +2,7 @@
 ///
 /// The values of `Bool`, `Int`, and `String` can be decoded.
 @propertyWrapper
-public struct ForcibleBool: Decodable, CustomStringConvertible {
+public struct ForcibleBool: ForcibleValue {
     public var wrappedValue: Bool
 
     public var description: String {
