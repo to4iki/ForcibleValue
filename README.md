@@ -59,6 +59,69 @@ do {
 }
 ```
 
+### @ForcibleString.Option
+`@ForcibleString.Option` is nil if the Decoder is unable to decode the value, either when nil is encountered or some unexpected type.
+
+`ForcibleBool.Option` and `@ForcibleInt.Option` also have the same behavior, only the type that wraps is different.
+
+```swift
+struct Target: Decodable {
+    @ForcibleString.Option var value1: String?
+    @ForcibleString.Option var value2: String?
+}
+
+let json = #"{ "value1": 1 }"#.data(using: .utf8)!
+let target = try! JSONDecoder().decode(Target.self, from: json)
+
+print(target) // Target(_value1: 1, _value2: nil)
+```
+
+### @ForcibleDefault
+`@ForcibleDefault` provides a generic property wrapper that allows default values using a custom ForcibleDefaultSource protocol.  
+Below are a few common default source.
+
+#### @ForcibleDefault.EmptyString
+`@ForcibleDefault.EmptyString` returns an empty string instead of nil if the Decoder is unable to decode the container. 
+
+```swift
+struct Target: Decodable {
+    @ForcibleDefault.EmptyString var value1: String
+    @ForcibleDefault.EmptyString var value2: String
+}
+
+let json = #"{ "value1": 1 }"#.data(using: .utf8)!
+let target = try! JSONDecoder().decode(Target.self, from: json)
+print(target) // Target(_value1: 1, _value2: )
+```
+
+#### @ForcibleDefault.False
+`@ForcibleDefault.Flase` returns an false instead of nil if the Decoder is unable to decode the container. 
+
+```swift
+struct Target: Decodable {
+    @ForcibleDefault.False var value1: Bool
+    @ForcibleDefault.True var value2: Bool
+}
+
+let json = #"{}"#.data(using: .utf8)!
+let target = try! JSONDecoder().decode(Target.self, from: json)
+print(target) // Target(_value1: false, _value2: true)
+```
+
+#### @ForcibleDefault.Zero
+`@ForcibleDefault.Zero` returns an 0 instead of nil if the Decoder is unable to decode the container.
+
+```swift
+struct Target: Decodable {
+    @ForcibleDefault.Zero var value1: Int
+    @ForcibleDefault.Zero var value2: Int
+}
+
+let json = #"{ "value1": "1" }"#.data(using: .utf8)!
+let target = try! JSONDecoder().decode(Target.self, from: json)
+print(target) // Target(_value1: 1, _value2: 0)
+```
+
 ## Examples
 
 - [Example.playground](https://github.com/to4iki/ForcibleValue/blob/main/Example.playground/Contents.swift)
