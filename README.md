@@ -13,7 +13,7 @@ Decode value that is sometimes an Int and other times a String your `Codable` st
 ### Swift Package Manager
 
 ```swift
-.package(url: "https://github.com/to4iki/ForcibleValue", from: "0.1.0")
+.package(url: "https://github.com/to4iki/ForcibleValue", from: <#version#>)
 ```
 
 ### Cocoapods
@@ -77,11 +77,11 @@ print(target) // Target(_value1: 1, _value2: nil)
 ```
 
 ### @ForcibleDefault
-`@ForcibleDefault` provides a generic property wrapper that allows default values using a custom ForcibleDefaultSource protocol.  
+`@ForcibleDefault` provides a generic property wrapper that allows default values using a custom ForcibleDefaultSource protocol.
 Below are a few common default source.
 
 #### @ForcibleDefault.EmptyString
-`@ForcibleDefault.EmptyString` returns an empty string instead of nil if the Decoder is unable to decode the container. 
+`@ForcibleDefault.EmptyString` returns an empty string instead of nil if the Decoder is unable to decode the container.
 
 ```swift
 struct Target: Decodable {
@@ -95,7 +95,7 @@ print(target) // Target(_value1: 1, _value2: )
 ```
 
 #### @ForcibleDefault.False
-`@ForcibleDefault.Flase` returns an false instead of nil if the Decoder is unable to decode the container. 
+`@ForcibleDefault.Flase` returns an false instead of nil if the Decoder is unable to decode the container.
 
 ```swift
 struct Target: Decodable {

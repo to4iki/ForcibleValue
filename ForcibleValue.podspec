@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "ForcibleValue"
-  spec.version      = "0.1.0"
+  spec.version      = "0.2.0"
   spec.summary      = "Better Codable through Property Wrappers."
 
   spec.description  = <<-DESC
