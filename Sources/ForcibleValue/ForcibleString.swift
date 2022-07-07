@@ -2,7 +2,7 @@
 ///
 /// The values of `String`, `Int`, and `Double` can be decoded.
 @propertyWrapper
-public struct ForcibleString: Codable, CustomStringConvertible {
+public struct ForcibleString: ForcibleValue {
     public var wrappedValue: String
 
     public var description: String {
@@ -31,5 +31,31 @@ public struct ForcibleString: Codable, CustomStringConvertible {
                 )
             )
         }
+    }
+}
+
+// MARK: - ForcibleString.Option
+extension ForcibleString {
+    @propertyWrapper
+    public struct Option: Decodable, CustomStringConvertible {
+        public var wrappedValue: String?
+
+        public var description: String {
+            wrappedValue?.description ?? "nil"
+        }
+
+        public init(wrappedValue: String?) {
+            self.wrappedValue = wrappedValue
+        }
+
+        public init(from decoder: Decoder) throws {
+            self.wrappedValue = try ForcibleString(from: decoder).wrappedValue
+        }
+    }
+}
+
+extension KeyedDecodingContainer {
+    public func decode(_ type: ForcibleString.Option.Type, forKey key: Key) throws -> ForcibleString.Option {
+        try decodeIfPresent(type, forKey: key) ?? ForcibleString.Option(wrappedValue: nil)
     }
 }
