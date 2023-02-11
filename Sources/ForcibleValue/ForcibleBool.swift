@@ -63,7 +63,7 @@ extension ForcibleBool {
         public var wrappedValue: Bool?
 
         public var description: String {
-            wrappedValue?.description ?? "nil"
+            wrappedValue?.description ?? Optional<Bool>.none.debugDescription
         }
 
         public init(wrappedValue: Bool?) {

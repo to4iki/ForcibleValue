@@ -41,7 +41,7 @@ extension ForcibleString {
         public var wrappedValue: String?
 
         public var description: String {
-            wrappedValue?.description ?? "nil"
+            wrappedValue?.description ?? Optional<String>.none.debugDescription
         }
 
         public init(wrappedValue: String?) {
