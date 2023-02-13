@@ -8,8 +8,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - swift: "~5.3"
-            os: macos-latest
           - swift: "~5.4"
             os: macos-11
           - swift: "~5.5"
