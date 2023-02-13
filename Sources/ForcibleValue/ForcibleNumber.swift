@@ -2,7 +2,7 @@
 ///
 /// The values of `LosslessStringConvertible` and `String` can be decoded.
 @propertyWrapper
-public struct ForcibleNumber<T: LosslessStringConvertible & Decodable>: ForcibleValue {
+public struct ForcibleNumber<T: LosslessStringConvertible & Decodable & Equatable & Hashable>: ForcibleValue {
     public var wrappedValue: T
 
     public var description: String {
@@ -49,7 +49,7 @@ extension ForcibleNumber {
         public var wrappedValue: T?
 
         public var description: String {
-            wrappedValue?.description ?? "nil"
+            wrappedValue?.description ?? Optional<T>.none.debugDescription
         }
 
         public init(wrappedValue: T?) {
