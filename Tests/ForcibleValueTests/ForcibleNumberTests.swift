@@ -3,11 +3,11 @@ import XCTest
 
 final class ForcibleNumberTests: XCTestCase {
     private struct Target: Decodable {
-        @ForcibleInt var value: Int
+        @ForcibleNumber var value: Int
     }
 
     private struct OptionTarget: Decodable {
-        @ForcibleInt.Option var value: Int?
+        @ForcibleNumber.Option var value: Int?
     }
 
     private struct DefaultTarget: Decodable {

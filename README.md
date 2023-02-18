@@ -35,9 +35,9 @@ You can define a variable of forcible type to decode your structs.
 ```swift
 struct User: Decodable {
     @ForcibleString var name: String
-    @ForcibleInt var age: Int
-    @ForcibleDouble var height: Double
-    @ForcibleFloat var weight: Float
+    @ForcibleNumber var age: Int
+    @ForcibleNumber var height: Double
+    @ForcibleNumber var weight: Float
     @ForcibleBool var isAdmin: Bool
 }
 
@@ -108,13 +108,13 @@ let target = try! JSONDecoder().decode(Target.self, from: json)
 print(target) // Target(_value1: false, _value2: true)
 ```
 
-#### @ForcibleDefault.Zero
+#### @ForcibleDefault.Zero<T: ForcibleNumberSource>
 `@ForcibleDefault.Zero` returns an 0 instead of nil if the Decoder is unable to decode the container.
 
 ```swift
 struct Target: Decodable {
     @ForcibleDefault.Zero var value1: Int
-    @ForcibleDefault.Zero var value2: Int
+    @ForcibleDefault.Zero var value2: Double
 }
 
 let json = #"{ "value1": "1" }"#.data(using: .utf8)!
