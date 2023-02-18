@@ -5,9 +5,9 @@ struct User: Decodable {
     @ForcibleString var fullName: String
     @ForcibleString.Option var nickName: String?
     @ForcibleDefault.EmptyString var petName: String
-    @ForcibleInt var age: Int
-    @ForcibleDouble var height: Double
-    @ForcibleFloat var weight: Float
+    @ForcibleNumber var age: Int
+    @ForcibleNumber var height: Double
+    @ForcibleNumber var weight: Float
     @ForcibleBool var isAdmin: Bool
 }
 
