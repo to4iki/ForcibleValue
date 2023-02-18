@@ -3,7 +3,7 @@ public enum ForcibleDefault {}
 
 extension ForcibleDefault {
     @propertyWrapper
-    public struct Wrapper<T: ForcibleDefaultSource>: Decodable, CustomStringConvertible, Equatable, Hashable {
+    public struct Wrapper<T: ForcibleDefaultSource>: Decodable, CustomStringConvertible, Equatable {
         public typealias Value = T.DefaultValue.Value
         public var wrappedValue: Value
 

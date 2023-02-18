@@ -1,5 +1,5 @@
 ///  Generic protocol for `ForcibleNumber` wrappedValue sources
-public typealias ForcibleNumberSource = Numeric & LosslessStringConvertible & Decodable & Equatable & Hashable
+public typealias ForcibleNumberSource = Numeric & LosslessStringConvertible & Decodable & Equatable
 
 /// Type that forcible decodes to NumericType.
 ///
@@ -48,7 +48,7 @@ public struct ForcibleNumber<T: ForcibleNumberSource>: ForcibleValue {
 // MARK: - ForcibleNumber.Option
 extension ForcibleNumber {
     @propertyWrapper
-    public struct Option: Decodable, CustomStringConvertible, Equatable, Hashable {
+    public struct Option: Decodable, CustomStringConvertible, Equatable {
         public var wrappedValue: T?
 
         public var description: String {

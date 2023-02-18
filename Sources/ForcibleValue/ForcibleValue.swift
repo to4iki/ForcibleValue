@@ -1,5 +1,6 @@
 ///  Generic protocol for Forcible Decode type
-public protocol ForcibleValue: Decodable, CustomStringConvertible, Equatable, Hashable {
-    associatedtype Value: Decodable & CustomStringConvertible & Equatable & Hashable
+public protocol ForcibleValue: Decodable, CustomStringConvertible, Equatable {
+    associatedtype Value: Decodable & CustomStringConvertible & Equatable
     var wrappedValue: Value { get }
 }
+
