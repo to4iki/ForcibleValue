@@ -45,7 +45,7 @@ public struct ForcibleNumber<T: LosslessStringConvertible & Decodable & Equatabl
 // MARK: - ForcibleString.Option
 extension ForcibleNumber {
     @propertyWrapper
-    public struct Option: Decodable, CustomStringConvertible {
+    public struct Option: Decodable, CustomStringConvertible, Equatable, Hashable {
         public var wrappedValue: T?
 
         public var description: String {
