@@ -37,7 +37,7 @@ public struct ForcibleString: ForcibleValue {
 // MARK: - ForcibleString.Option
 extension ForcibleString {
     @propertyWrapper
-    public struct Option: Decodable, CustomStringConvertible {
+    public struct Option: Decodable, CustomStringConvertible, Equatable, Hashable {
         public var wrappedValue: String?
 
         public var description: String {

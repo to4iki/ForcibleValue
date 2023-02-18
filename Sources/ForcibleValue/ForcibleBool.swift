@@ -59,7 +59,7 @@ public struct ForcibleBool: ForcibleValue {
 // MARK: - ForcibleBool.Option
 extension ForcibleBool {
     @propertyWrapper
-    public struct Option: Decodable, CustomStringConvertible {
+    public struct Option: Decodable, CustomStringConvertible, Equatable, Hashable {
         public var wrappedValue: Bool?
 
         public var description: String {
