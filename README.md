@@ -34,28 +34,28 @@ You can define a variable of forcible type to decode your structs.
 
 ```swift
 struct User: Decodable {
-    @ForcibleString var name: String
-    @ForcibleNumber var age: Int
-    @ForcibleNumber var height: Double
-    @ForcibleNumber var weight: Float
-    @ForcibleBool var isAdmin: Bool
+  @ForcibleString var name: String
+  @ForcibleNumber var age: Int
+  @ForcibleNumber var height: Double
+  @ForcibleNumber var weight: Float
+  @ForcibleBool var isAdmin: Bool
 }
 
 let json = """
 {
-    "name": 1234,
-    "age": "30",
-    "height": "172.3",
-    "weight": "60.0",
-    "isAdmin": 1
+  "name": 1234,
+  "age": "30",
+  "height": "172.3",
+  "weight": "60.0",
+  "isAdmin": 1
 }
 """.data(using: .utf8)
 
 do {
-    let user = try JSONDecoder().decode(User.self, from: json!)
-    print(user) // User(_name: 1234, _age: 30, _height: 172.3, _weight: 60.0, _isAdmin: true)
+  let user = try JSONDecoder().decode(User.self, from: json!)
+  print(user) // User(_name: 1234, _age: 30, _height: 172.3, _weight: 60.0, _isAdmin: true)
 } catch {
-    print(error)
+  print(error)
 }
 ```
 
@@ -66,8 +66,8 @@ do {
 
 ```swift
 struct Target: Decodable {
-    @ForcibleString.Option var value1: String?
-    @ForcibleString.Option var value2: String?
+  @ForcibleString.Option var value1: String?
+  @ForcibleString.Option var value2: String?
 }
 
 let json = #"{ "value1": 1 }"#.data(using: .utf8)!
@@ -85,8 +85,8 @@ Below are a few common default source.
 
 ```swift
 struct Target: Decodable {
-    @ForcibleDefault.EmptyString var value1: String
-    @ForcibleDefault.EmptyString var value2: String
+  @ForcibleDefault.EmptyString var value1: String
+  @ForcibleDefault.EmptyString var value2: String
 }
 
 let json = #"{ "value1": 1 }"#.data(using: .utf8)!
@@ -99,8 +99,8 @@ print(target) // Target(_value1: 1, _value2: )
 
 ```swift
 struct Target: Decodable {
-    @ForcibleDefault.False var value1: Bool
-    @ForcibleDefault.True var value2: Bool
+  @ForcibleDefault.False var value1: Bool
+  @ForcibleDefault.True var value2: Bool
 }
 
 let json = #"{}"#.data(using: .utf8)!
@@ -113,18 +113,14 @@ print(target) // Target(_value1: false, _value2: true)
 
 ```swift
 struct Target: Decodable {
-    @ForcibleDefault.Zero var value1: Int
-    @ForcibleDefault.Zero var value2: Double
+  @ForcibleDefault.Zero var value1: Int
+  @ForcibleDefault.Zero var value2: Double
 }
 
 let json = #"{ "value1": "1" }"#.data(using: .utf8)!
 let target = try! JSONDecoder().decode(Target.self, from: json)
 print(target) // Target(_value1: 1, _value2: 0)
 ```
-
-## Examples
-
-- [Example.playground](https://github.com/to4iki/ForcibleValue/blob/main/Example.playground/Contents.swift)
 
 ## License
 
