@@ -15,7 +15,7 @@ extension ForcibleDefault {
       self.wrappedValue = wrappedValue
     }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
       self.wrappedValue = try T.DefaultValue.init(from: decoder).wrappedValue
     }
   }

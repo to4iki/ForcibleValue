@@ -13,7 +13,7 @@ public struct ForcibleBool: ForcibleValue {
     self.wrappedValue = wrappedValue
   }
 
-  public init(from decoder: Decoder) throws {
+  public init(from decoder: any Decoder) throws {
     let container = try decoder.singleValueContainer()
 
     if let bool = try? container.decode(Bool.self) {
@@ -71,7 +71,7 @@ extension ForcibleBool {
       self.wrappedValue = wrappedValue
     }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
       self.wrappedValue = try ForcibleBool(from: decoder).wrappedValue
     }
   }

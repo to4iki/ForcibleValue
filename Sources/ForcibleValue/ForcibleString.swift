@@ -13,7 +13,7 @@ public struct ForcibleString: ForcibleValue {
     self.wrappedValue = wrappedValue
   }
 
-  public init(from decoder: Decoder) throws {
+  public init(from decoder: any Decoder) throws {
     let container = try decoder.singleValueContainer()
 
     if let string = try? container.decode(String.self) {
@@ -49,7 +49,7 @@ extension ForcibleString {
       self.wrappedValue = wrappedValue
     }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
       self.wrappedValue = try ForcibleString(from: decoder).wrappedValue
     }
   }
