@@ -16,7 +16,7 @@ public struct ForcibleNumber<T: ForcibleNumberSource>: ForcibleValue {
     self.wrappedValue = wrappedValue
   }
 
-  public init(from decoder: Decoder) throws {
+  public init(from decoder: any Decoder) throws {
     let container = try decoder.singleValueContainer()
 
     if let value = try? container.decode(T.self) {
@@ -60,7 +60,7 @@ extension ForcibleNumber {
       self.wrappedValue = wrappedValue
     }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
       self.wrappedValue = try ForcibleNumber(from: decoder).wrappedValue
     }
   }
