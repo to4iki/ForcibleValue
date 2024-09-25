@@ -1,8 +1,10 @@
-import XCTest
+import Foundation
+import Testing
 
 @testable import ForcibleValue
 
-final class ForcibleNumberTests: XCTestCase {
+@Suite
+struct ForcibleNumberTests {
   private struct Target: Decodable {
     @ForcibleNumber var value: Int
   }
@@ -15,99 +17,71 @@ final class ForcibleNumberTests: XCTestCase {
     @ForcibleDefault.Zero var value: Int
   }
 
-  func testDecodeSuccess() throws {
-    let testCases: [ParameterizedTestCase<Any, Int>] = [
-      .init(input: 1, output: 1),
-      .init(input: "\"1\"", output: 1),
-    ]
-
-    for testCase in testCases {
-      let json = """
-        {
-            "value": \(testCase.input)
-        }
-        """.data(using: .utf8)
-
-      do {
-        let target = try JSONDecoder().decode(Target.self, from: json!)
-        XCTAssertEqual(target.value, testCase.output)
-      } catch {
-        XCTFail(error.localizedDescription)
+  @Test(arguments: [
+    TestCase(input: 1, output: 1),
+    TestCase(input: "\"1\"", output: 1),
+  ])
+  func decodeSuccess(testCase: TestCase<Any, Int>) throws {
+    let json = """
+      {
+          "value": \(testCase.input)
       }
+      """.data(using: .utf8)
+    let target = try JSONDecoder().decode(Target.self, from: json!)
+    #expect(target.value == testCase.output)
+  }
+
+  @Test(arguments: [
+    TestCase(input: "\"abc\"", output: ())
+  ])
+  func decodeError(testCase: TestCase<Any, Void>) throws {
+    let json = """
+      {
+          "value": \(testCase.input)
+      }
+      """.data(using: .utf8)
+    #expect(throws: (any Error).self) {
+      try JSONDecoder().decode(Target.self, from: json!)
     }
   }
 
-  func testDecodeError() throws {
-    let testCases: [ParameterizedTestCase<Any, Void>] = [
-      .init(input: "\"abc\"", output: ())
-    ]
-
-    for testCase in testCases {
-      let json = """
-        {
-            "value": \(testCase.input)
-        }
-        """.data(using: .utf8)
-
-      XCTAssertThrowsError(
-        try JSONDecoder().decode(Target.self, from: json!)
-      )
-    }
+  @Test(arguments: [
+    TestCase(input: nil, output: nil),
+    TestCase(input: "\"1\"", output: 1),
+  ])
+  func decodeOptionSuccess(testCase: TestCase<Any?, Int?>) throws {
+    let json: Data? = {
+      if let input = testCase.input {
+        return """
+          {
+              "value": \(input)
+          }
+          """.data(using: .utf8)
+      } else {
+        return "{}".data(using: .utf8)
+      }
+    }()
+    let target = try JSONDecoder().decode(OptionTarget.self, from: json!)
+    #expect(target.value == testCase.output)
   }
 
-  func testOptionDecode() throws {
-    let testCases: [ParameterizedTestCase<Any?, Int?>] = [
-      .init(input: nil, output: nil),
-      .init(input: "\"1\"", output: 1),
-    ]
-
-    for testCase in testCases {
-      let json: Data? = {
-        if let input = testCase.input {
-          return """
-            {
-                "value": \(input)
-            }
-            """.data(using: .utf8)
-        } else {
-          return "{}".data(using: .utf8)
-        }
-      }()
-
-      do {
-        let target = try JSONDecoder().decode(OptionTarget.self, from: json!)
-        XCTAssertEqual(target.value, testCase.output)
-      } catch {
-        XCTFail(error.localizedDescription)
+  @Test(arguments: [
+    TestCase(input: nil, output: 0),
+    TestCase(input: "\"1\"", output: 1),
+  ])
+  func decodeDefaultSuccess(testCase: TestCase<Any?, Int>) throws {
+    let json: Data? = {
+      if let input = testCase.input {
+        return """
+          {
+              "value": \(input)
+          }
+          """.data(using: .utf8)
+      } else {
+        return "{}".data(using: .utf8)
       }
-    }
-  }
-
-  func testDefaultValueDecode() throws {
-    let testCases: [ParameterizedTestCase<Any?, Int>] = [
-      .init(input: nil, output: 0),
-      .init(input: "\"1\"", output: 1),
-    ]
-
-    for testCase in testCases {
-      let json: Data? = {
-        if let input = testCase.input {
-          return """
-            {
-                "value": \(input)
-            }
-            """.data(using: .utf8)
-        } else {
-          return "{}".data(using: .utf8)
-        }
-      }()
-
-      do {
-        let target = try JSONDecoder().decode(DefaultTarget.self, from: json!)
-        XCTAssertEqual(target.value, testCase.output)
-      } catch {
-        XCTFail(error.localizedDescription)
-      }
-    }
+    }()
+    let target = try JSONDecoder().decode(DefaultTarget.self, from: json!)
+    #expect(target.value == testCase.output)
   }
 }

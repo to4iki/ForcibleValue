@@ -17,7 +17,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        xcode: ['15.4']
+        xcode: ['16.0']
         config: ['debug', 'release']
     steps:
       - uses: actions/checkout@v3
