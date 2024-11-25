@@ -1,6 +1,6 @@
 # ForcibleValue
 
-![Swift 5](https://img.shields.io/badge/swift-5-orange.svg)
+![Swift 6](https://img.shields.io/badge/swift-6-orange.svg)
 ![CocoaPods compatible](https://img.shields.io/cocoapods/v/ForcibleValue.svg)
 ![Carthage compatible](https://img.shields.io/badge/carthage-compatible-brightgreen.svg)
 ![SPM compatible](https://img.shields.io/badge/SPM-Compatible-brightgreen.svg)
