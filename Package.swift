@@ -3,7 +3,7 @@
 import PackageDescription
 
 let debugSwiftSettings: [PackageDescription.SwiftSetting] = [
-  .enableUpcomingFeature("ExistentialAny", .when(configuration: .debug)), // SE-0335
+  .enableUpcomingFeature("ExistentialAny", .when(configuration: .debug))  // SE-0335
 ]
 
 let package = Package(
