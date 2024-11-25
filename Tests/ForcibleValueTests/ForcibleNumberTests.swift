@@ -18,10 +18,9 @@ struct ForcibleNumberTests {
   }
 
   @Test(arguments: [
-    TestCase(input: 1, output: 1),
-    TestCase(input: "\"1\"", output: 1),
+    TestCase(input: "\"1\"", output: 1)
   ])
-  func decodeSuccess(testCase: TestCase<Any, Int>) throws {
+  func decodeSuccess(testCase: TestCase<String, Int>) throws {
     let json = """
       {
           "value": \(testCase.input)
@@ -34,7 +33,7 @@ struct ForcibleNumberTests {
   @Test(arguments: [
     TestCase(input: "\"abc\"", output: ())
   ])
-  func decodeError(testCase: TestCase<Any, Void>) throws {
+  func decodeError(testCase: TestCase<String, Void>) throws {
     let json = """
       {
           "value": \(testCase.input)
@@ -49,7 +48,7 @@ struct ForcibleNumberTests {
     TestCase(input: nil, output: nil),
     TestCase(input: "\"1\"", output: 1),
   ])
-  func decodeOptionSuccess(testCase: TestCase<Any?, Int?>) throws {
+  func decodeOptionSuccess(testCase: TestCase<String?, Int?>) throws {
     let json: Data? = {
       if let input = testCase.input {
         return """
@@ -69,7 +68,7 @@ struct ForcibleNumberTests {
     TestCase(input: nil, output: 0),
     TestCase(input: "\"1\"", output: 1),
   ])
-  func decodeDefaultSuccess(testCase: TestCase<Any?, Int>) throws {
+  func decodeDefaultSuccess(testCase: TestCase<String?, Int>) throws {
     let json: Data? = {
       if let input = testCase.input {
         return """

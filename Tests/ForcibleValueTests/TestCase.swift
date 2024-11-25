@@ -1,4 +1,4 @@
-struct TestCase<Input, Output> {
+struct TestCase<Input: Sendable, Output: Sendable>: Sendable {
   let input: Input
   let output: Output
   let description: String
